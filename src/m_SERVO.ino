@@ -17,11 +17,7 @@
 #include <stb_servo.h>
 
 STB_BRAIN Brain;
-
-
-#ifndef ServoDisable 
-    STB_SERVO Servos;
-#endif
+STB_SERVO Servos;
 
 
 void servoRecieve() {
@@ -36,15 +32,12 @@ void servoRecieve() {
 void setup() {
     Brain.begin();
     Brain.setSlaveAddr(1);
-    Brain.dbgln(F("WDT endabled"));
     wdt_enable(WDTO_8S);
     wdt_reset();
-
-    Brain.flags = servoFlag;
+    Brain.flags = cmdFlags::servoFlag;
 }
 
 void loop() {
-    //Serial.println(millis());
 
     if (Brain.slaveRespond()) {
         Serial.println("slave got pushed");
